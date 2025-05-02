@@ -1,6 +1,6 @@
-from jbi100_app.main import app
-from jbi100_app.views.menu import make_menu_layout
-from jbi100_app.views.scatterplot import Scatterplot
+from _2AMV10_app.main import app
+from _2AMV10_app.views.menu import make_menu_layout
+from _2AMV10_app.views.scatterplot import Scatterplot
 
 from dash import html
 import plotly.express as px
@@ -55,4 +55,4 @@ if __name__ == '__main__':
         return scatterplot2.update(selected_color, selected_data)
 
 
-    app.run_server(debug=False, dev_tools_ui=False)
+    app.run_server(debug=True, dev_tools_ui=False)
