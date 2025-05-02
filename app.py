@@ -14,28 +14,33 @@ if __name__ == '__main__':
     folium_map = html.Iframe(
         srcDoc=open(map_path, 'r').read(),
         width='100%',
-        height='600px'
+        height='100%'
     )
 
     app.layout = html.Div(
-        id="app-container",
-        children=[
-            # Left column
-            html.Div(
-                id="left-column",
-                className="three columns",
-                children=make_menu_layout()
-            ),
-
-            # Right column
-            html.Div(
-                id="right-column",
-                className="nine columns",
-                children=[
-                    folium_map  # Add the Folium map here
-                ],
-            ),
-        ],
-    )
+    id="app-container",
+    style={"height": "100vh", "display": "flex", "flexDirection": "row"},  # Full viewport height
+    children=[
+        html.Div(
+            id="left-column",
+            className="three columns",
+            style={"height": "100vh", "overflowY": "auto"},  # Scrollable if needed
+            children=make_menu_layout()
+        ),
+        html.Div(
+            id="right-column",
+            className="nine columns",
+            style={"height": "100vh"},
+            children=[
+                html.Iframe(
+                    srcDoc=open(map_path, 'r').read(),
+                    width='100%',
+                    height='100%',
+                    style={"border": "none"}  # Optional: remove default border
+                )
+            ]
+        ),
+    ]
+)
 
     app.run_server(debug=True, dev_tools_ui=False)

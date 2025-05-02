@@ -12,9 +12,24 @@ def generate_map():
     with open(geojson_path, "r") as f:
         geo_data = json.load(f)
 
-    # Create the Folium map
-    m = folium.Map(location=[39.5, -165.5], zoom_start=7, tiles='CartoDB positron')
+    # Create the base map
+    m = folium.Map(location=[39.5, -165.5], zoom_start=7, tiles='CartoDB positron', name="Simple View")
 
+    # Add a terrain view layer with attribution
+    folium.TileLayer(
+        tiles='https://stamen-tiles.a.ssl.fastly.net/terrain/{z}/{x}/{y}.png',
+        name="Terrain View",
+        attr="Map tiles by Stamen Design, CC BY 3.0 — Map data © OpenStreetMap contributors"
+    ).add_to(m)
+
+    # Add a satellite view layer with attribution
+    folium.TileLayer(
+        tiles='https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+        name="Satellite View",
+        attr="Tiles © Esri — Source: Esri, DeLorme, NAVTEQ, USGS, Intermap, iPC"
+    ).add_to(m)
+
+    # Add the GeoJSON layer
     def style_function(feature):
         kind = feature['properties'].get('*Kind', 'Unknown')
         colors = {
@@ -38,6 +53,7 @@ def generate_map():
         tooltip=folium.GeoJsonTooltip(fields=['Name', 'Description', '*Kind'], aliases=['Name', 'Description', 'Type'])
     ).add_to(m)
 
+    # Add layer control to switch between views
     folium.LayerControl().add_to(m)
 
     # Save the map to the data directory
