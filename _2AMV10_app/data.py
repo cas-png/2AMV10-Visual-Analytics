@@ -7,7 +7,7 @@ def get_all_data():
     if not ml_latest_path.exists():
         raise FileNotFoundError(f"Folder not found at {ml_latest_path}")
 
-    # Load all CSV files into DataFrames
+    # Load all CSV files
     genome_scores = pd.read_csv(ml_latest_path / "genome-scores.csv")
     genome_tags = pd.read_csv(ml_latest_path / "genome-tags.csv")
     links = pd.read_csv(ml_latest_path / "links.csv")
@@ -15,5 +15,10 @@ def get_all_data():
     ratings = pd.read_csv(ml_latest_path / "ratings.csv")
     tags = pd.read_csv(ml_latest_path / "tags.csv")
 
-    # Return all DataFrames
+    # Add formatted IMDb IDs to links
+    links["imdbId"] = links["imdbId"].apply(lambda x: f"tt{int(x):07d}")
+
+    # Merge imdbId into movies
+    movies = movies.merge(links[["movieId", "imdbId"]], on="movieId", how="left")
+
     return genome_scores, genome_tags, links, movies, ratings, tags

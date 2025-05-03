@@ -25,7 +25,7 @@ def fetch_movie_image(title):
 
     # Parameters for the API request
     params = {
-        "t": title,  # Movie title
+        "i": title,  # Movie title
         "apikey": api_key,  # Your API key
     }
 
