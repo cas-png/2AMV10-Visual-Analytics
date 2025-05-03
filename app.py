@@ -29,12 +29,13 @@ if __name__ == '__main__':
                 className="nine columns",
                 style={"height": "100vh", "padding": "20px"},
                 children=[
-                    # Search bar for movie title
-                    dcc.Input(
-                        id="movie-search-bar",
-                        type="text",
+                    # Dropdown for movie title suggestions
+                    dcc.Dropdown(
+                        id="movie-dropdown",
+                        options=[],  # Options will be dynamically updated
                         placeholder="Type a movie title...",
-                        style={"width": "100%", "marginBottom": "20px"}
+                        style={"width": "100%", "marginBottom": "20px"},
+                        searchable=True,
                     ),
                     # Div to display the movie poster
                     html.Div(
@@ -47,18 +48,32 @@ if __name__ == '__main__':
         ]
     )
 
+    # Callback to update the dropdown options based on user input
+    @app.callback(
+        Output("movie-dropdown", "options"),
+        [Input("movie-dropdown", "search_value")]
+    )
+    def update_dropdown_options(search_value):
+        if not search_value:
+            return []  # Return an empty list if no input is provided
+
+        # Filter movie titles based on the search value (case-insensitive)
+        filtered_movies = movies[movies["title"].str.contains(search_value, case=False, na=False)]
+
+        # Limit the number of suggestions to 10 for performance
+        filtered_movies = filtered_movies.head(10)
+
+        # Return the filtered titles as dropdown options
+        return [{"label": title, "value": title} for title in filtered_movies["title"]]
+
     # Callback to fetch and display the movie poster
     @app.callback(
         Output("movie-poster-container", "children"),
-        [Input("movie-search-bar", "value")]
+        [Input("movie-dropdown", "value")]
     )
     def update_movie_poster(movie_title):
         if not movie_title:
             return "Enter a movie title to see its poster."
-
-        # Check if the movie exists in the dataset
-        if movie_title not in movies["title"].values:
-            return f"Movie '{movie_title}' not found in the dataset."
 
         # Fetch the movie poster using the API
         poster_url = fetch_movie_image(movie_title)
