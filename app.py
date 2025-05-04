@@ -54,50 +54,61 @@ if __name__ == '__main__':
     )
 
     @app.callback(
-        Output("movie-dropdown", "options"),
-        [Input("movie-dropdown", "search_value")]
+    Output("movie-dropdown", "options"),
+    [Input("movie-dropdown", "search_value"), Input("movie-dropdown", "value")]
     )
-    def update_dropdown_options(search_value):
-        if not search_value:
-            return []
+    def update_dropdown_options(search_value, current_value):
+        logger.debug(f"Dropdown search triggered with value: {search_value}")
 
-        # Filter movies by search
-        filtered_movies = movies[movies["title"].str.contains(search_value, case=False, na=False)]
+        options = []
 
-        # Limit to 10 results
-        filtered_movies = filtered_movies.head(10)
+        if search_value:
+            # Filter movies by search
+            filtered_movies = movies[movies["title"].str.contains(search_value, case=False, na=False)].head(10)
+            options = [
+                {"label": row["title"], "value": row["imdbId"]}
+                for _, row in filtered_movies.iterrows()
+                if pd.notna(row["imdbId"])
+            ]
 
-        # Show full title, pass IMDb ID as value
-        return [
-            {"label": row["title"], "value": row["imdbId"]}
-            for _, row in filtered_movies.iterrows()
-            if pd.notna(row["imdbId"])  # skip if imdbId is missing
-        ]
+        # Ensure current selection is preserved
+        if current_value and all(opt["value"] != current_value for opt in options):
+            # Try to get label from DataFrame
+            match = movies[movies["imdbId"] == current_value]
+            if not match.empty:
+                label = match.iloc[0]["title"]
+                options.insert(0, {"label": label, "value": current_value})
+
+        return options
+
 
     @app.callback(
     Output("movie-poster-container", "children"),
     [Input("movie-dropdown", "value")]
     )
-    def update_movie_poster(movie_title):
-        logger.debug("Callback triggered.")
-        logger.debug(f"Selected title: {movie_title}")
+    def update_movie_poster(imdb_id):
+        logger.debug(f"Selected IMDb ID: {imdb_id}")
 
-        if not movie_title:
-            logger.debug("No title selected.")
-            return "Enter a movie title to see its poster."
+        if not imdb_id:
+            return html.Div("Enter a movie title to see its poster.", 
+                            style={"color": "red", "fontSize": "20px"})
 
-        poster_url = fetch_movie_image(movie_title)
-        logger.debug(f"Fetched poster URL: {poster_url}")
+        poster_url = fetch_movie_image(imdb_id)  # this must be fixed as above
+        logger.debug(f"Poster URL: {poster_url}")
 
         if poster_url.startswith("Error"):
-            logger.warning("Poster fetch failed. Showing fallback.")
             return html.Div([
-                html.P("Poster not found or error occurred."),
-                html.P(poster_url),
-                html.Img(src="/assets/fallback-image.jpg", style={"maxWidth": "100%", "height": "auto"})
+                html.H3("Error:", style={"color": "red"}),
+                html.P(poster_url)
             ])
 
-        logger.info("Poster found. Displaying image.")
-        return html.Img(src=poster_url, style={"maxWidth": "100%", "height": "auto"})
+        return html.Div([
+            html.H3(f"IMDb ID: {imdb_id}"),
+            html.Img(
+                src=poster_url,
+                style={"maxWidth": "300px", "height": "auto", "border": "2px solid black"}
+            )
+        ])
+
 
     app.run_server(debug=True, dev_tools_ui=True)

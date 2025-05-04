@@ -22,3 +22,11 @@ def get_all_data():
     movies = movies.merge(links[["movieId", "imdbId"]], on="movieId", how="left")
 
     return genome_scores, genome_tags, links, movies, ratings, tags
+
+if __name__ == "__main__":
+    genome_scores, genome_tags, links, movies, ratings, tags = get_all_data()
+    
+
+    print(movies[movies["imdbId"] == 'tt0111161'])
+    
+    
