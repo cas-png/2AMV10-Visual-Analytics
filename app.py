@@ -1,5 +1,5 @@
 from _2AMV10_app.main import app
-from _2AMV10_app.data import get_all_data
+from data import get_all_data
 from _2AMV10_app.views.movie_layout import create_movie_layout
 from _2AMV10_app.callbacks.movie_callbacks import register_movie_callbacks
 from _2AMV10_app.callbacks.chart_callbacks import register_chart_callbacks
