@@ -12,6 +12,7 @@ def get_all_data():
     movies = pd.read_csv(data_dir / "movies.csv")
     ratings = pd.read_csv(data_dir / "ratings.csv")
     tags = pd.read_csv(data_dir / "tags.csv")
+    movies_metadata = pd.read_csv(data_dir / "movies_metadata.csv")
 
     # Add formatted IMDb IDs to links
     links["imdbId"] = links["imdbId"].apply(lambda x: f"tt{int(x):07d}")
@@ -66,10 +67,10 @@ def get_all_data():
         return genre
 
     genre = get_genre_data(movies, ratings)
-    return genome_scores, genome_tags, links, movies, ratings, tags, genre
+    return genome_scores, genome_tags, links, movies, ratings, tags, genre, movies_metadata
 
 if __name__ == "__main__":
-    genome_scores, genome_tags, links, movies, ratings, tags, genre = get_all_data()
+    genome_scores, genome_tags, links, movies, ratings, tags, genre, movies_metadata = get_all_data()
     
     # Print example movie with its rating statistics
     print(movies[movies["imdbId"] == 'tt0111161'])

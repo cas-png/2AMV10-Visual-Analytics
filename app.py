@@ -1,9 +1,11 @@
 from _2AMV10_app.main import app
 from _2AMV10_app.data import get_all_data
 from _2AMV10_app.views.movie_layout import create_movie_layout
+from _2AMV10_app.views.xgboost_layout import create_xgboost_layout
 from _2AMV10_app.callbacks.movie_callbacks import register_movie_callbacks
 from _2AMV10_app.callbacks.chart_callbacks import register_chart_callbacks
 from _2AMV10_app.callbacks.genre_callbacks import register_genre_callbacks
+from _2AMV10_app.callbacks.xgboost_callbacks import register_xgboost_callbacks
 import logging
 
 # Set up logging
@@ -15,15 +17,16 @@ logger = logging.getLogger(__name__)
 
 if __name__ == '__main__':
     # Load the movies DataFrame
-    _, _, _, movies, ratings, _, genre = get_all_data()
+    _, _, _, movies, ratings, _, genre, movies_metadata = get_all_data()
     
     # Set up the layout
-    app.layout = create_movie_layout(movies, ratings, genre)
+    app.layout = create_movie_layout(movies, ratings, genre, movies_metadata)
     
     # Register callbacks
     register_movie_callbacks(app, movies)
     register_chart_callbacks(app, movies, ratings)
     register_genre_callbacks(app, movies)
+    register_xgboost_callbacks(app, movies_metadata)
     
     # Run the app
     app.run_server(debug=True, dev_tools_ui=True)
