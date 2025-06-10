@@ -72,13 +72,15 @@ if __name__ == "__main__":
     genome_scores, genome_tags, links, movies, ratings, tags, genre = get_all_data()
     
     # Print example movie with its rating statistics
-    print(movies[movies["imdbId"] == 'tt0111161'])
-    print(genre)
-    print(ratings)
+    #print(movies[movies["imdbId"] == 'tt0111161'])
+    #print(genre)
+    #print(ratings)
+    rating_toystory = ratings[ratings["movieId"] == 1]
+    print(rating_toystory["rating"].value_counts())
 
     # Convert the timestamp to datetime
-    ratings['datetime'] = pd.to_datetime(ratings['timestamp'], unit='s')
+    #ratings['datetime'] = pd.to_datetime(ratings['timestamp'], unit='s')
 
-    ratings.sort_values(by="datetime", ascending=True)
-    print(ratings)
-    print(movies)
+    #ratings.sort_values(by="datetime", ascending=True)
+    #print(ratings)
+    #print(movies)

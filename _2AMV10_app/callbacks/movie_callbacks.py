@@ -1,13 +1,14 @@
 from dash.dependencies import Input, Output
-from dash import html
+from dash import html, dcc
 import logging
 import pandas as pd
+import plotly.express as px
 from _2AMV10_app.views.movieimage import fetch_movie_image
 
 # Set up logging
 logger = logging.getLogger(__name__)
 
-def register_movie_callbacks(app, movies):
+def register_movie_callbacks(app, movies, ratings):
     @app.callback(
         Output("movie-dropdown", "options"),
         [Input("movie-dropdown", "search_value"), Input("movie-dropdown", "value")]
@@ -64,6 +65,33 @@ def register_movie_callbacks(app, movies):
             genres = genres.split("|")
         avg_rating = round(movie_info["average_rating"], 2)
         rating_count = int(movie_info["rating_count"])
+        movie_id = movie_info["movieId"]
+
+        # Create rating distribution chart
+        movie_ratings = ratings[ratings["movieId"] == movie_id]
+        rating_counts = movie_ratings["rating"].value_counts().sort_index()
+        
+        fig = px.bar(
+            x=rating_counts.index,
+            y=rating_counts.values,
+            title="Rating Distribution",
+            labels={"x": "", "y": "Count"},
+            height=200
+        )
+        
+        fig.update_layout(
+            margin=dict(l=20, r=20, t=40, b=20),
+            showlegend=False,
+            xaxis=dict(tickmode='linear', tick0=0.5, dtick=0.5, title=None),
+            yaxis=dict(showgrid=False, title="Count"),
+            paper_bgcolor='rgba(0,0,0,0)',
+            plot_bgcolor='rgba(0,0,0,0)',
+            title_x=0.5,  # Center the title
+            bargap=0  # Remove padding between bars
+        )
+        
+        # Update bar width to fill the space
+        fig.update_traces(width=0.5)
 
         # Define genre colors
         genre_colors = {
@@ -123,6 +151,7 @@ def register_movie_callbacks(app, movies):
                     html.Span(f"{rating_count} ratings", style={"fontSize": "14px"})
                 ], style={"marginBottom": "10px"}),
                 html.Div(genre_tags, style={"display": "flex", "flexWrap": "wrap", "marginTop": "10px"}),
+                dcc.Graph(figure=fig, style={"height": "200px", "marginTop": "10px"}),
                 html.Div([
                     html.A(
                         "View on IMDb",

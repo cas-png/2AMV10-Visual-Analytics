@@ -21,7 +21,7 @@ if __name__ == '__main__':
     app.layout = create_movie_layout(movies, ratings, genre)
     
     # Register callbacks
-    register_movie_callbacks(app, movies)
+    register_movie_callbacks(app, movies, ratings)
     register_chart_callbacks(app, movies, ratings)
     register_genre_callbacks(app, movies)
     
