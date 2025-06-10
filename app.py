@@ -26,4 +26,4 @@ if __name__ == '__main__':
     register_genre_callbacks(app, movies)
     
     # Run the app
-    app.run_server(debug=True, dev_tools_ui=True)
+    app.run(debug=True, dev_tools_ui=True)
