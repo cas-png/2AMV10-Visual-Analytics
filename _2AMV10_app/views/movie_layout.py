@@ -1,6 +1,7 @@
 from dash import html, dcc
 from .scatter_plot import create_genre_ratings_chart
 from .genre_trends import create_genre_trends_chart
+from .top_rated_movies import create_top_rated_movies_chart
 
 def create_movie_layout(movies, ratings, genre):
     return html.Div(
@@ -49,7 +50,7 @@ def create_movie_layout(movies, ratings, genre):
                                 label="General Insights",
                                 value="insights",
                                 children=[
-                                    #create_general_insights(movies)
+                                    create_top_rated_movies_chart(movies)
                                 ]
                             ),
                             dcc.Tab(
