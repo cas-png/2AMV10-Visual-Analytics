@@ -30,11 +30,42 @@ def create_movie_layout(movies, ratings, genre):
             html.Div(
                 id="right-column",
                 className="nine columns",
-                style={"height": "100vh", "padding": "20px", "display": "flex", "flexDirection": "column"},
+                style={"height": "100vh", "padding": "20px", "overflowY": "auto"},
                 children=[
-                    create_genre_ratings_chart(movies, ratings),
-                    create_genre_trends_chart(genre)
+                    dcc.Tabs(
+                        id="tab-selector",
+                        value="overview",
+                        style={"padding-bottom": "10px", "fontWeight": "bold"},
+                        children=[
+                            dcc.Tab(
+                                label="Movie Analytics Dashboard",
+                                value="overview",
+                                children=[
+                                    create_genre_ratings_chart(movies, ratings),
+                                    create_genre_trends_chart(genre)
+                                ]
+                            ),
+                            dcc.Tab(
+                                label="General Insights",
+                                value="insights",
+                                children=[
+                                    #create_general_insights(movies)
+                                ]
+                            ),
+                            dcc.Tab(
+                                label="Machine Learning",
+                                value="machine_learning",
+                                children=[
+                                    html.Div(
+                                        "Machine Learning content will be added here soon.",
+                                        style={"textAlign": "center", "marginTop": "20px"}
+                                    )
+                                ]
+                            )
+                        ]
+                    )
                 ]
             )
+
         ]
     ) 
