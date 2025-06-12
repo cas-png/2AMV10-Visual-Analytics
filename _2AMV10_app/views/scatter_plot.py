@@ -76,7 +76,7 @@ def create_genre_ratings_chart(movies, ratings):
     )
     
     return html.Div([
-        html.H2("Movie Analytics Dashboard", style={"marginBottom": "5px"}),
+        html.H2("Movie Analytics Dashboard", id="dashboard-title"),
         dcc.Dropdown(
             id='chart-selector',
             options=[

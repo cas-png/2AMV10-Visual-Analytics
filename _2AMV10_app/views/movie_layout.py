@@ -17,7 +17,7 @@ def create_movie_layout(movies, ratings, genre):
                         id="movie-dropdown",
                         options=[],
                         placeholder="Type a movie title...",
-                        style={"width": "100%", "marginBottom": "20px"},
+                        style={"width": "100%", "marginBottom": "10px"},
                         searchable=True,
                     ),
                     html.Div(

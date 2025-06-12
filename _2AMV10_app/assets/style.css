@@ -47,10 +47,19 @@ h5 {
     border-bottom:  1px solid #ccc;
 }
 
-selected-chart, #genre-trends-chart {
-    background-color: #f0f0f0;
+#selected-chart, #genre-trends-chart {
+    background-color: #ffffff;
     border-radius: 2rem;
     padding: 1rem;
     margin: auto;
     margin-top: 0px;
 }
+
+#dashboard-title {
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-weight: bold;
+    font-size: 28px;
+}
+
