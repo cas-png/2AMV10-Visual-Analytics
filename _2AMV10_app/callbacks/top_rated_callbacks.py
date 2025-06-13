@@ -60,8 +60,8 @@ def register_top_rated_callbacks(app, movies):
         # Header row
         header = html.Div([
             html.Div("#", style={"width": "40px", "fontWeight": "bold", "color": "#2c8cff", "textAlign": "right"}),
-            html.Div("Title", style={"flex": "2", "fontWeight": "bold", "paddingLeft": "10px"}),
-            html.Div("Genres", style={"flex": "2", "fontWeight": "bold", "color": "#666", "paddingLeft": "10px"}),
+            html.Div("Title", style={"flex": "3", "fontWeight": "bold", "paddingLeft": "10px"}),
+            html.Div("Genres", style={"flex": "3", "fontWeight": "bold", "color": "#666", "paddingLeft": "10px"}),
             html.Div("Rating / Users", style={"width": "120px", "fontWeight": "bold", "textAlign": "right", "color": "#666"})
         ], style={
             **row_style,
@@ -81,12 +81,18 @@ def register_top_rated_callbacks(app, movies):
             movie_list.append(
                 html.Div([
                     html.Div(f"{start_idx + i + 1}.", style={"width": "40px", "fontWeight": "bold", "color": "#2c8cff", "textAlign": "right"}),
-                    html.Div(movie['title'], style={"flex": "2", "fontWeight": "bold", "paddingLeft": "10px"}),
-                    html.Div(genres_str, style={"flex": "2", "color": "#666", "paddingLeft": "10px"}),
-                    html.Div([
-                        html.Span(f"⭐ {movie['average_rating']:.2f}", style={"color": "#FFD700", "marginRight": "10px"}),
-                        html.Span(f"👥 {movie['rating_count']}", style={"color": "#666"})
-                    ], style={"width": "120px", "textAlign": "right"})
+                    html.Div(movie['title'], style={"flex": "3", "fontWeight": "bold", "paddingLeft": "10px"}),
+                    html.Div(genres_str, style={"flex": "3", "color": "#666", "paddingLeft": "10px"}),
+                    html.Div(
+                        f"⭐ {movie['average_rating']:.2f}  👥 {movie['rating_count']}",
+                        style={
+                            "width": "120px",
+                            "textAlign": "right",
+                            "color": "#222",
+                            "fontVariantNumeric": "tabular-nums",
+                            "fontFamily": "monospace"
+                        }
+                    )
                 ], style=row_style)
             )
         # If no movies match the criteria
