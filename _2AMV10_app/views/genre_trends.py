@@ -76,6 +76,6 @@ def create_genre_trends_chart(genre_df):
         dcc.Graph(
             id='genre-trends-chart',
             figure=fig,
-            style={'height': '40vh'}
+            style={'height': '400px'}
         )
     ]) 

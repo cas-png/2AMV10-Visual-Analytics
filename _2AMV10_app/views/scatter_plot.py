@@ -87,5 +87,5 @@ def create_genre_ratings_chart(movies, ratings):
             value='avg',
             style={'width': '50%', 'marginBottom': '10px'}
         ),
-        dcc.Graph(id='selected-chart')
+        dcc.Graph(id='selected-chart', style={'height': '400px'})
     ]) 
