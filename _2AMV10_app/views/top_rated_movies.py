@@ -81,7 +81,7 @@ def create_top_rated_movies_chart(movies):
         ], style={
             "backgroundColor": "white",
             "padding": "15px",
-            "borderRadius": "0.675rem",
+            "borderRadius": "1rem",
             "marginBottom": "20px",
             "boxShadow": "0 2px 4px rgba(0,0,0,0.1)"
         }),
@@ -91,7 +91,7 @@ def create_top_rated_movies_chart(movies):
             id='top-rated-movies-list',
             style={
                 "backgroundColor": "white",
-                "borderRadius": "0.675rem",
+                "borderRadius": "1rem",
                 "padding": "1rem",
                 "marginTop": "10px",
                 "boxShadow": "0 2px 4px rgba(0,0,0,0.1)"
