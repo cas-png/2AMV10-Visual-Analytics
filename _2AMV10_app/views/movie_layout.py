@@ -2,6 +2,7 @@ from dash import html, dcc
 from .scatter_plot import create_genre_ratings_chart
 from .genre_trends import create_genre_trends_chart
 from .top_rated_movies import create_top_rated_movies_chart
+from .machine_learning import create_machine_learning_layout
 
 def create_movie_layout(movies, ratings, genre):
     return html.Div(
@@ -57,16 +58,12 @@ def create_movie_layout(movies, ratings, genre):
                                 label="Machine Learning",
                                 value="machine_learning",
                                 children=[
-                                    html.Div(
-                                        "Machine Learning content will be added here soon.",
-                                        style={"textAlign": "center", "marginTop": "20px"}
-                                    )
+                                    create_machine_learning_layout()
                                 ]
                             )
                         ]
                     )
                 ]
             )
-
         ]
     ) 
