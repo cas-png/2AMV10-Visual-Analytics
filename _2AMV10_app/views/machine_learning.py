@@ -100,10 +100,6 @@ def create_machine_learning_layout():
     return html.Div([
         html.H1('Movie Revenue Prediction', className='text-2xl font-bold mb-4'),
         html.Div([
-            html.P(
-                'This visualization shows the predicted revenue for movies based on their genre and budget across different release months. Use the dropdowns above the chart to explore different combinations.',
-                className='mb-4'
-            ),
             dcc.Graph(figure=fig, id='revenue-prediction-plot')
         ], className='bg-gray-800 p-4 rounded-lg')
     ], className='p-4') 
