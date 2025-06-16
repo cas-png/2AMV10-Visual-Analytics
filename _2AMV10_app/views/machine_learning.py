@@ -38,7 +38,7 @@ def create_machine_learning_layout():
     )
 
     return html.Div([
-        html.H1('Movie Revenue Prediction', className='text-2xl font-bold mb-4'),
+        html.H2('Movie Revenue Prediction', style={"marginBottom": "10px", "fontWeight": "bold", "placement": "center"}),
         html.Div([
             html.Label("Select Genre:", className="font-semibold"),
             dcc.Dropdown(
@@ -86,7 +86,7 @@ def update_plot(selected_genre, selected_budget):
         title=f"Predicted Revenue for {selected_genre} | ${selected_budget:,}",
         xaxis_title="Month",
         yaxis_title="Predicted Revenue ($)",
-        height=700,
+        height=300,
         template="plotly_white",
         hovermode='closest'
     )

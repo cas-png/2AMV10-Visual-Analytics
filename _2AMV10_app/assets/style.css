@@ -47,7 +47,7 @@ h5 {
     border-bottom:  1px solid #ccc;
 }
 
-#selected-chart, #genre-trends-chart, #ML_plot {
+#selected-chart, #genre-trends-chart, #ML_plot, #TAG_plot {
     background-color: #ffffff;
     border-radius: 1rem;
     padding: 1rem;
@@ -55,4 +55,3 @@ h5 {
     margin-top: 0px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
-

@@ -3,6 +3,7 @@ from .scatter_plot import create_genre_ratings_chart
 from .genre_trends import create_genre_trends_chart
 from .top_rated_movies import create_top_rated_movies_chart
 from .machine_learning import create_machine_learning_layout
+from .genre_tag_analysis import create_genre_tag_analysis
 
 def create_movie_layout(movies, ratings, genre):
     return html.Div(
@@ -58,7 +59,8 @@ def create_movie_layout(movies, ratings, genre):
                                 label="Machine Learning",
                                 value="machine_learning",
                                 children=[
-                                    create_machine_learning_layout()
+                                    create_machine_learning_layout(),
+                                    create_genre_tag_analysis()
                                 ]
                             )
                         ]
