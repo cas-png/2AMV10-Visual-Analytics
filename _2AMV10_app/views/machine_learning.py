@@ -56,12 +56,12 @@ def create_machine_learning_layout():
                 marks={budget: f"${budget//1_000_000}M" for budget in budgets},
                 tooltip={"placement": "bottom", "always_visible": True}
             ),
-            dcc.Graph(figure=fig, id='revenue-prediction-plot')
+            dcc.Graph(figure=fig, id='ML_plot')
         ], className='bg-gray-800 p-4 rounded-lg')
     ], className='p-4')
 
 @callback(
-    Output('revenue-prediction-plot', 'figure'),
+    Output('ML_plot', 'figure'),
     Input('genre-dropdown', 'value'),
     Input('budget-slider', 'value')
 )

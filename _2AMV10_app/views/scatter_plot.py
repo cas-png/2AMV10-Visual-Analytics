@@ -76,6 +76,7 @@ def create_genre_ratings_chart(movies, ratings):
     )
     
     return html.Div([
+        html.Label("Select Visualization:", className="font-semibold"),
         dcc.Dropdown(
             id='chart-selector',
             options=[
