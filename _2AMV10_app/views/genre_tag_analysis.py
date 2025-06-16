@@ -26,24 +26,23 @@ def create_genre_tag_analysis():
         title=f"Top 10 Tags for Genre: {initial_genre}",
         xaxis_title="Count",
         yaxis_title="Tag",
-        height=400,
+        height=300,
         template="plotly_white"
     )
 
     return html.Div([
-    html.Div([
-        html.Label("Select Genre:", className="font-semibold"),
-        dcc.Dropdown(
-            id='genre-tag-dropdown',
-            options=[{'label': genre, 'value': genre} for genre in genre_tag_matrix.index],
-            value=initial_genre, style={"marginBottom": "10px"}
-        ),
-        html.Div(
-            dcc.Graph(figure=fig, id='TAG_plot')
-        )
-    ], className='bg-gray-800 p-4 rounded-lg')
-], className='p-4')
-
+        html.Div([
+            html.Label("Select Genre:", className="font-semibold"),
+            dcc.Dropdown(
+                id='genre-tag-dropdown',
+                options=[{'label': genre, 'value': genre} for genre in genre_tag_matrix.index],
+                value=initial_genre, style={"marginBottom": "10px"}
+            ),
+            html.Div(
+                dcc.Graph(figure=fig, id='TAG_plot')
+            )
+        ], className='bg-gray-800 p-4 rounded-lg')
+    ], className='p-4')
 
 @callback(
     Output('TAG_plot', 'figure'),
@@ -74,5 +73,5 @@ def update_tag_plot(selected_genre):
         height=300,
         template="plotly_white"
     )
-
+    
     return fig

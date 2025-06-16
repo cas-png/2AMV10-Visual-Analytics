@@ -32,7 +32,7 @@ def create_machine_learning_layout():
         title=f"Predicted Revenue for {initial_genre} | ${initial_budget:,}",
         xaxis_title="Month",
         yaxis_title="Predicted Revenue ($)",
-        height=700,
+        height=300,
         template="plotly_white",
         hovermode='closest'
     )
