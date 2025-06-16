@@ -37,7 +37,7 @@ def create_top_rated_movies_chart(movies):
         )
     
     return html.Div([
-        html.H2("Top Rated Movies", style={"marginBottom": "10px", "fontWeight": "bold", "placement": "center"}),
+        html.H4("Top Rated Movies", style={"marginBottom": "10px", "fontWeight": "bold", "placement": "center"}),
         
         # Filters container
         html.Div([

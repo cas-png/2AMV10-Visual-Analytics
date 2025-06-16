@@ -10,7 +10,7 @@ def create_machine_learning_layout():
     budgets = list(range(10_000_000, 110_000_000, 10_000_000))
 
     return html.Div([
-        html.H2('Movie Revenue Prediction', style={"marginBottom": "10px", "fontWeight": "bold", "placement": "center"}),
+        html.H4('Movie Revenue Prediction', style={"marginBottom": "10px", "fontWeight": "bold", "placement": "center"}),
         html.Div([
             html.Label("Select Genre:", className="font-semibold"),
             dcc.Dropdown(

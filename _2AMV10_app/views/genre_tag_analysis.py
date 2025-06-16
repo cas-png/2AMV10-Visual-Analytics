@@ -26,7 +26,7 @@ def create_genre_tag_analysis():
                 value=genre_tag_matrix.index[0], 
                 style={"marginBottom": "10px"}
             ),
-            dcc.Graph(id='TAG_plot', style={'height': '300px'})
+            dcc.Graph(id='TAG_plot', style={'height': '325x'})
         ], className='bg-gray-800 p-4 rounded-lg')
     ], className='p-4')
 
@@ -67,7 +67,7 @@ def update_tag_plot(selected_genre):
         title=f"Top 10 Tags for Genre: {selected_genre}",
         xaxis_title="TF-IDF Score",  # Changed from "Count" to "TF-IDF Score"
         yaxis_title="Tag",
-        height=300,
+        height=325,
         template="plotly_white"
     )
     
