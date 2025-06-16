@@ -39,7 +39,7 @@ def create_genre_tag_analysis():
                 value=initial_genre, style={"marginBottom": "10px"}
             ),
             html.Div(
-                dcc.Graph(figure=fig, id='TAG_plot')
+                dcc.Graph(figure=fig, id='TAG_plot', style={'height': '300px'})
             )
         ], className='bg-gray-800 p-4 rounded-lg')
     ], className='p-4')

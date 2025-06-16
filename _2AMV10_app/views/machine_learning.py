@@ -7,35 +7,7 @@ from ..ML_data import load_ml_data, predict_best_release_month
 def create_machine_learning_layout():
     # Load ML data
     ml_data = load_ml_data()
-
-    # Initial figure setup
-    initial_genre = ml_data['genre_options'][0]
     budgets = list(range(10_000_000, 110_000_000, 10_000_000))
-    initial_budget = budgets[0]
-
-    best_month, initial_data = predict_best_release_month(
-        ml_data['model'], ml_data['genre_columns'], [initial_genre], initial_budget
-    )
-
-    fig = go.Figure(
-        go.Scatter(
-            x=ml_data['months'],
-            y=initial_data,
-            mode='lines+markers',
-            marker=dict(size=8, color='blue'),
-            line=dict(color='royalblue'),
-            hovertemplate='Month: %{x}<br>Revenue: $%{y:,.0f}<extra></extra>'
-        )
-    )
-
-    fig.update_layout(
-        title=f"Predicted Revenue for {initial_genre} | ${initial_budget:,}",
-        xaxis_title="Month",
-        yaxis_title="Predicted Revenue ($)",
-        height=300,
-        template="plotly_white",
-        hovermode='closest'
-    )
 
     return html.Div([
         html.H2('Movie Revenue Prediction', style={"marginBottom": "10px", "fontWeight": "bold", "placement": "center"}),
@@ -44,7 +16,7 @@ def create_machine_learning_layout():
             dcc.Dropdown(
                 id='genre-dropdown',
                 options=[{'label': genre, 'value': genre} for genre in ml_data['genre_options']],
-                value=initial_genre
+                value=ml_data['genre_options'][0]
             ),
             html.Label("Select Budget:", className="font-semibold mt-4"),
             dcc.Slider(
@@ -52,11 +24,12 @@ def create_machine_learning_layout():
                 min=10_000_000,
                 max=100_000_000,
                 step=10_000_000,
-                value=initial_budget,
+                value=budgets[0],
                 marks={budget: f"${budget//1_000_000}M" for budget in budgets},
                 tooltip={"placement": "bottom", "always_visible": True}
             ),
-            dcc.Graph(figure=fig, id='ML_plot')
+            # Single graph component that gets updated - just like your working example
+            dcc.Graph(id='ML_plot', style={'height': '300px'})
         ], className='bg-gray-800 p-4 rounded-lg')
     ], className='p-4')
 
@@ -71,6 +44,7 @@ def update_plot(selected_genre, selected_budget):
         ml_data['model'], ml_data['genre_columns'], [selected_genre], selected_budget
     )
 
+    # Create the figure from scratch each time - just like your working example
     fig = go.Figure(
         go.Scatter(
             x=ml_data['months'],
