@@ -1,12 +1,14 @@
 from dash import html, dcc, Output, Input, callback
 import plotly.graph_objects as go
+import pandas as pd
+from sklearn.feature_extraction.text import TfidfTransformer
 from ..data import get_all_data
 
 def create_genre_tag_analysis():
-    # Load data once - keeping your exact processing logic
+    # Load data once - keeping your exact processing logic but adding TF-IDF
     _, _, _, df_movies, _, df_tags, _ = get_all_data()
 
-    # Your original processing steps here (keeping them exactly as you had them)
+    # Your original processing steps
     movies_df = df_movies[["movieId", "genres"]].copy()
     movies_df["genres_list"] = movies_df["genres"].str.split("|")
     movie_genres = movies_df.explode("genres_list").rename(columns={"genres_list": "genre"})[["movieId", "genre"]]
@@ -24,7 +26,6 @@ def create_genre_tag_analysis():
                 value=genre_tag_matrix.index[0], 
                 style={"marginBottom": "10px"}
             ),
-            # Single graph component that gets updated - just like your working example
             dcc.Graph(id='TAG_plot', style={'height': '300px'})
         ], className='bg-gray-800 p-4 rounded-lg')
     ], className='p-4')
@@ -37,6 +38,7 @@ def update_tag_plot(selected_genre):
     # Reload data (ideally cached for efficiency)
     _, _, _, df_movies, _, df_tags, _ = get_all_data()
 
+    # Same processing as before
     movies_df = df_movies[["movieId", "genres"]].copy()
     movies_df["genres_list"] = movies_df["genres"].str.split("|")
     movie_genres = movies_df.explode("genres_list").rename(columns={"genres_list": "genre"})[["movieId", "genre"]]
@@ -45,16 +47,25 @@ def update_tag_plot(selected_genre):
     genre_tag_counts = tags_with_genre.drop_duplicates(subset=["movieId", "tag", "genre"]).groupby(["genre", "tag"])["movieId"].nunique().reset_index(name="count_movies_with_tag")
     genre_tag_matrix = genre_tag_counts.pivot(index="genre", columns="tag", values="count_movies_with_tag").fillna(0)
 
-    top_tags = genre_tag_matrix.loc[selected_genre].sort_values(ascending=False).head(10)
+    tfidf = TfidfTransformer(norm="l2", smooth_idf=True)
+    tfidf_matrix = tfidf.fit_transform(genre_tag_matrix.values)
+    tfidf_df = pd.DataFrame(
+        tfidf_matrix.toarray(),
+        index=genre_tag_matrix.index,    
+        columns=genre_tag_matrix.columns  
+    )
 
-    # Create the figure from scratch each time - just like your working example
+    # Get top tags using TF-IDF scores instead of counts
+    top_tags_tfidf = tfidf_df.loc[selected_genre].sort_values(ascending=False).head(10)
+
+    # Create the figure using TF-IDF scores
     fig = go.Figure(
-        go.Bar(x=top_tags.values, y=top_tags.index, orientation='h')
+        go.Bar(x=top_tags_tfidf.values, y=top_tags_tfidf.index, orientation='h')
     )
 
     fig.update_layout(
         title=f"Top 10 Tags for Genre: {selected_genre}",
-        xaxis_title="Count",
+        xaxis_title="TF-IDF Score",  # Changed from "Count" to "TF-IDF Score"
         yaxis_title="Tag",
         height=300,
         template="plotly_white"
