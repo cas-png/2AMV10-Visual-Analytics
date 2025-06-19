@@ -26,7 +26,7 @@ def create_genre_tag_analysis():
                 value=genre_tag_matrix.index[0], 
                 style={"marginBottom": "10px"}
             ),
-            dcc.Graph(id='TAG_plot', style={'height': '325x'})
+            dcc.Graph(id='TAG_plot', style={'height': '325px'})
         ], className='bg-gray-800 p-4 rounded-lg')
     ], className='p-4')
 
