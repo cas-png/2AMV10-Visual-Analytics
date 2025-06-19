@@ -1,6 +1,6 @@
 # Movie Analytics Dashboard
 
-This project is a Dash-based web application for visual analytics of movie data, including genre trends, top-rated movies, and more.
+This project is a Dash-based web application for visual analytics of movie data, including genre trends, top-rated movies, and more. It was made in pyton 3.10.11 and not tested on other version so please use this version.
 
 ## Setup Instructions
 
@@ -17,11 +17,15 @@ python3 -m venv venv
 source venv/bin/activate  # On Windows use: venv\Scripts\activate
 ```
 
-### 3. Install Dependencies
+### 3.1 Install Dependencies
 Install all required Python packages:
 ```bash
 pip install -r requirements.txt
 ```
+### 3.2 Make .env and use api key for posters.
+Request free api key at https://www.omdbapi.com/apikey.aspx
+make a ".env" file in the main directory and put the API key in using "OMDB_API_KEY=.........."
+save file
 
 ### 4. Run the Application
 Start the Dash app:
