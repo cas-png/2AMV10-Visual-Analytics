@@ -46,7 +46,8 @@ def register_movie_callbacks(app, movies, ratings):
 
         if not imdb_id:
             return html.Div("Enter a movie title to see its poster.", 
-                            style={"color": "red", "fontSize": "20px"})
+                            style={"color": "red", "fontSize": "28px", 
+                                   "textAlign": "center", "fontWeight": "bold"})
 
         poster_url = fetch_movie_image(imdb_id)
         logger.debug(f"Poster URL: {poster_url}")
@@ -136,7 +137,7 @@ def register_movie_callbacks(app, movies, ratings):
         imdb_link = f"https://www.imdb.com/title/{imdb_id}/"
 
         return html.Div([
-            html.H3(movie_title, style={"marginBottom": "10px"}),
+            html.H3(movie_title, style={"marginBottom": "10px", "fontWeight": "bold", "fontSize": "28px"}),
             html.Img(
                 src=poster_url,
                 style={"maxWidth": "300px", "height": "auto", "border": "2px solid black", "marginBottom": "10px"}

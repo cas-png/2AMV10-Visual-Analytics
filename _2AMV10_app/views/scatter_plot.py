@@ -76,7 +76,7 @@ def create_genre_ratings_chart(movies, ratings):
     )
     
     return html.Div([
-        html.H2("Movie Analytics Dashboard", style={"marginBottom": "5px"}),
+        html.Label("Select Visualization:", className="font-semibold"),
         dcc.Dropdown(
             id='chart-selector',
             options=[
@@ -88,5 +88,5 @@ def create_genre_ratings_chart(movies, ratings):
             value='avg',
             style={'width': '50%', 'marginBottom': '10px'}
         ),
-        dcc.Graph(id='selected-chart')
+        dcc.Graph(id='selected-chart', style={'height': '400px'})
     ]) 

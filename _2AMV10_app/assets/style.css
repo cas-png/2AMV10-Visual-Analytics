@@ -46,3 +46,12 @@ h5 {
     padding-bottom: 7px;
     border-bottom:  1px solid #ccc;
 }
+
+#selected-chart, #genre-trends-chart, #ML_plot, #TAG_plot {
+    background-color: #ffffff;
+    border-radius: 1rem;
+    padding: 1rem;
+    margin: auto;
+    margin-top: 0px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}

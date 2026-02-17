@@ -4,6 +4,7 @@ from _2AMV10_app.views.movie_layout import create_movie_layout
 from _2AMV10_app.callbacks.movie_callbacks import register_movie_callbacks
 from _2AMV10_app.callbacks.chart_callbacks import register_chart_callbacks
 from _2AMV10_app.callbacks.genre_callbacks import register_genre_callbacks
+from _2AMV10_app.callbacks.top_rated_callbacks import register_top_rated_callbacks
 import logging
 
 # Set up logging
@@ -24,6 +25,7 @@ if __name__ == '__main__':
     register_movie_callbacks(app, movies, ratings)
     register_chart_callbacks(app, movies, ratings)
     register_genre_callbacks(app, movies)
+    register_top_rated_callbacks(app, movies)
     
     # Run the app
     app.run(debug=True, dev_tools_ui=True)

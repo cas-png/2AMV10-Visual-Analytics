@@ -73,10 +73,11 @@ if __name__ == "__main__":
     
     # Print example movie with its rating statistics
     #print(movies[movies["imdbId"] == 'tt0111161'])
-    #print(genre)
-    #print(ratings)
-    rating_toystory = ratings[ratings["movieId"] == 1]
-    print(rating_toystory["rating"].value_counts())
+    print(genre)
+    print(ratings)
+    print(movies)
+    #rating_toystory = ratings[ratings["movieId"] == 1]
+    #print(rating_toystory["rating"].value_counts())
 
     # Convert the timestamp to datetime
     #ratings['datetime'] = pd.to_datetime(ratings['timestamp'], unit='s')
